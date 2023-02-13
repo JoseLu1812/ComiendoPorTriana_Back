@@ -1,6 +1,7 @@
-package com.salesianos.triana.ComiendoPorTriana.bar.model;
+package com.salesianos.triana.ComiendoPorTriana.comment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

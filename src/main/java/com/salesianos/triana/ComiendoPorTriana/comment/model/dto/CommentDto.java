@@ -1,8 +1,6 @@
-package com.salesianos.triana.ComiendoPorTriana.bar.model.dto.comment;
+package com.salesianos.triana.ComiendoPorTriana.comment.model.dto;
 
-import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
-import com.salesianos.triana.ComiendoPorTriana.bar.model.Comment;
-import com.salesianos.triana.ComiendoPorTriana.user.model.User;
+import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import lombok.*;
 
 import javax.persistence.Column;

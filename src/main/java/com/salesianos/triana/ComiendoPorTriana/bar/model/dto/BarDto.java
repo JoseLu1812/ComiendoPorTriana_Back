@@ -1,10 +1,7 @@
-package com.salesianos.triana.ComiendoPorTriana.bar.model.dto.bar;
+package com.salesianos.triana.ComiendoPorTriana.bar.model.dto;
 
 import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import java.util.List;
@@ -12,9 +9,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
-public class CreateBarDto {
-
+public class BarDto {
 
     @Column(name = "NAME")
     private String name;
@@ -31,20 +28,14 @@ public class CreateBarDto {
     @Column(name = "IMAGE")
     private List<String> images;
 
-
-    public static Bar toBar(CreateBarDto dto) {
-
-        return Bar.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .author(dto.getAuthor())
-                .direction(dto.getDirection())
-                .images(dto.getImages())
+    public static BarDto of(Bar b) {
+        return BarDto.builder()
+                .name(b.getName())
+                .description(b.getDescription())
+                .author(b.getAuthor())
+                .direction(b.getDirection())
+                .images(b.getImages())
                 .build();
     }
-
-
-
-
 
 }

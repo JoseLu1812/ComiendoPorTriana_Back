@@ -11,5 +11,4 @@ public class BarService {
 
     private final BarRepository repo;
 
-
 }

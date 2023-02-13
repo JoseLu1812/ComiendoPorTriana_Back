@@ -1,5 +1,6 @@
 package com.salesianos.triana.ComiendoPorTriana.bar.model;
 
+import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

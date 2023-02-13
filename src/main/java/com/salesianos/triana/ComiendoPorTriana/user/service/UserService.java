@@ -34,11 +34,11 @@ public class UserService {
     }
 
     public User createUserWithUserRole(CreateUserRequest createUserRequest) {
-        return createUser(createUserRequest, EnumSet.of(UserRole.USER));
+        return createUser(createUserRequest, EnumSet.of(UserRole.CLIENT));
     }
 
     public User createUserWithAdminRole(CreateUserRequest createUserRequest) {
-        return createUser(createUserRequest, EnumSet.of(UserRole.ADMIN));
+        return createUser(createUserRequest, EnumSet.of(UserRole.BARMAN));
     }
 
     public List<User> findAll() {
@@ -90,5 +90,7 @@ public class UserService {
     public boolean passwordMatch(User user, String clearPassword) {
         return passwordEncoder.matches(clearPassword, user.getPassword());
     }
+
+    public boolean usernameExist(String username) { return userRepository.existByUsername(username);}
 
 }
