@@ -2,10 +2,7 @@ package com.salesianos.triana.ComiendoPorTriana.bar.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -17,7 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 @Builder
+@Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name="COMMENT_ENTITY")
 public class Comment {
 
     @Id

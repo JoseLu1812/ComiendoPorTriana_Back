@@ -10,14 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="user_entity")
+@Table(name="USER_ENTITY")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -31,38 +28,48 @@ public class User implements UserDetails {
     private UUID id;
 
     @NaturalId
-    @Column(unique = true, updatable = false)
+    @Column(name = "USERNAME", unique = true, updatable = false)
     private String username;
-
+    @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "FULLNAME")
     private String fullName;
 
+    @Column(name = "AVATAR")
     private String avatar;
 
-    private List<Bar> favList;
+    @Builder.Default
+    @Column(name = "FAV_LIST")
+    private List<Bar> favList = new ArrayList<Bar>();
 
     @Builder.Default
+    @Column(name = "ACCOUNT_NON_EXPIRED")
     private boolean accountNonExpired = true;
     @Builder.Default
+    @Column(name = "ACCOUNT_NON_LOCKED")
     private boolean accountNonLocked = true;
     @Builder.Default
+    @Column(name = "CREDENTIALS_NON_EXPIRED")
     private boolean credentialsNonExpired = true;
     @Builder.Default
+    @Column(name = "ENABLED")
     private boolean enabled = true;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "ROLES")
     private Set<UserRole> roles;
 
     @CreatedDate
+    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
 
     @Builder.Default
+    @Column(name = "LAST_PASSWORD_CHANGE_AT")
     private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
-
-
 
 
     @Override

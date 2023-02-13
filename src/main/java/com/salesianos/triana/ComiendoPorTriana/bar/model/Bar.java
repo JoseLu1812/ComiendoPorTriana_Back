@@ -14,7 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 @Builder
+@Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name="BAR_ENTITY")
 public class Bar {
 
     @Id
