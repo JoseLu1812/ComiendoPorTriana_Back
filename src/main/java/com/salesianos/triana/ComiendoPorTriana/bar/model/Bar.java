@@ -5,14 +5,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Bar {
 
@@ -34,8 +35,12 @@ public class Bar {
     private String direction;
 
     @Column(name = "IMAGE")
-    private String image;
+    @Builder.Default
+    private List<String> images = new ArrayList<String>();
 
+    @Column(name = "COMMENTS")
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<Comment>();
 
     @Column(name = "CREATED_AT")
     @Builder.Default

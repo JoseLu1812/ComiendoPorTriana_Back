@@ -1,5 +1,6 @@
 package com.salesianos.triana.ComiendoPorTriana.user.model;
 
+import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,6 +42,8 @@ public class User implements UserDetails {
 
     private String avatar;
 
+    private List<Bar> favList;
+
     @Builder.Default
     private boolean accountNonExpired = true;
     @Builder.Default
@@ -57,6 +61,9 @@ public class User implements UserDetails {
 
     @Builder.Default
     private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
+
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

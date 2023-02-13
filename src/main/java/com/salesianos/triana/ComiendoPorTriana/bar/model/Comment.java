@@ -10,30 +10,39 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
-    @JoinColumn(name = "bar_id", foreignKey = @ForeignKey(name = "FK_COMMENT_BAR"))
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
+    private UUID id;
+
+    @JoinColumn(name = "BAR")
     @JsonIgnore
-    @ManyToMany()
+    @ManyToOne(fetch = FetchType.LAZY)
     private Bar bar;
 
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_COMMENT_USER"))
+    @JoinColumn(name = "USER")
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "body")
-    private String body;
+    @Column(name = "BODY")
+    private String text;
 
+    @Column(name = "CREATED_AT")
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
