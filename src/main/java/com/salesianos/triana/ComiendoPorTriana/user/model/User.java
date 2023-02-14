@@ -3,6 +3,7 @@ package com.salesianos.triana.ComiendoPorTriana.user.model;
 import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,9 +26,21 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(
+                            name = "uuid_gen_strategy_class",
+                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+                    )
+            }
+    )
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @NaturalId
+    @Column(unique = true, updatable = false)
     private String username;
     private String password;
 

@@ -55,6 +55,8 @@ public class UserService {
 
     public Optional<User> edit(User user) {
 
+        // El username no se puede editar
+        // La contraseña se edita en otro método
 
         return userRepository.findById(user.getId())
                 .map(u -> {
@@ -87,10 +89,5 @@ public class UserService {
             userRepository.deleteById(id);
     }
 
-    public boolean passwordMatch(User user, String clearPassword) {
-        return passwordEncoder.matches(clearPassword, user.getPassword());
-    }
-
-    public boolean usernameExist(String username) { return userRepository.existByUsername(username);}
 
 }
