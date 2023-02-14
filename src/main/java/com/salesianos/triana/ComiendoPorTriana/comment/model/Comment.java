@@ -31,10 +31,10 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     private Bar bar;
 
-    @JoinColumn(name = "USER")
+    @JoinColumn(name = "AUTHOR")
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User author;
 
     @Column(name = "TITLE")
     private String title;

@@ -1,6 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.bar.model.dto;
 
 import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +23,8 @@ public class CreateBarDto {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "AUTHOR")
-    private String author;
+    @Column(name = "OWNER")
+    private User owner;
 
     @Column(name = "DIRECTION")
     private String direction;
@@ -37,7 +38,7 @@ public class CreateBarDto {
         return Bar.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())
-                .author(dto.getAuthor())
+                .owner(dto.getOwner())
                 .direction(dto.getDirection())
                 .images(dto.getImages())
                 .build();

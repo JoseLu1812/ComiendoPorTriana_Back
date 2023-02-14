@@ -1,5 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.user.model.dto;
 
+import com.salesianos.triana.ComiendoPorTriana.validation.annotation.UsernameNotRepeat;
+import com.salesianos.triana.ComiendoPorTriana.validation.annotation.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,19 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
-@PasswordValueMatch.List({
 
-        @PasswordValueMatch(
-
-                field = "password",
-
-                fieldMatch = "confirmPassword",
-
-                message = "Passwords do not match!"
-
-        )
-
-})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +17,13 @@ import javax.validation.constraints.NotEmpty;
 public class CreateUserRequest {
 
     @NotEmpty(message = "{createUserRequest.username.notempty}")
+    @UsernameNotRepeat
     private String username;
 
-
+    @ValidPassword
     private String password;
 
+    @ValidPassword
     private String verifyPassword;
 
     private String avatar;

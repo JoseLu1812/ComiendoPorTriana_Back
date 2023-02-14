@@ -1,6 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.comment.model.dto;
 
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -15,8 +16,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentDto {
 
-    @Column(name = "USER")
-    private String username;
+    @Column(name = "AUTHOR")
+    private User author;
 
     @Column(name = "TITLE")
     private String title;
@@ -29,7 +30,7 @@ public class CommentDto {
 
     public static CommentDto of(Comment c) {
         return CommentDto.builder()
-                .username(c.getUser().getUsername())
+                .author(c.getAuthor())
                 .title(c.getTitle())
                 .text(c.getText())
                 .createdAt(c.getCreatedAt())

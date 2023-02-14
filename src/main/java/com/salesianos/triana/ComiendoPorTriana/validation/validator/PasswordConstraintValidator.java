@@ -14,22 +14,9 @@ import java.util.Properties;
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
 
-
-    @Override
-    public void initialize(final ValidPassword arg0) {
-
-    }
-
-    @SneakyThrows
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
 
-        Properties props = new Properties();
-        InputStream inputStream = getClass()
-                .getClassLoader().getResourceAsStream("passay.properties");
-        props.load(inputStream);
-
-        MessageResolver resolver = new PropertiesMessageResolver(props);
         PasswordValidator validator = new PasswordValidator(
                 
                 new LengthRule(8, 24),

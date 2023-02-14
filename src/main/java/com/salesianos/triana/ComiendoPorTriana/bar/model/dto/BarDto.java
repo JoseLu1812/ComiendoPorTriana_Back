@@ -1,6 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.bar.model.dto;
 
 import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -19,8 +20,8 @@ public class BarDto {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "AUTHOR")
-    private String author;
+    @Column(name = "OWNER")
+    private User owner;
 
     @Column(name = "DIRECTION")
     private String direction;
@@ -32,7 +33,7 @@ public class BarDto {
         return BarDto.builder()
                 .name(b.getName())
                 .description(b.getDescription())
-                .author(b.getAuthor())
+                .owner(b.getOwner())
                 .direction(b.getDirection())
                 .images(b.getImages())
                 .build();
