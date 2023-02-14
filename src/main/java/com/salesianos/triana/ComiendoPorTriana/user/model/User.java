@@ -1,6 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.user.model;
 
 import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
+import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="USER_ENTITY")
+@Table(name="USER")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,51 +25,48 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @NaturalId
-    @Column(name = "USERNAME", unique = true, updatable = false)
     private String username;
-    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "FULLNAME")
     private String fullName;
 
-    @Column(name = "AVATAR")
     private String avatar;
 
     @Builder.Default
-    @Column(name = "FAV_LIST")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(name = "bar_id",
+            foreignKey = @ForeignKey(name="FK_FAVORITOS_BAR")),
+            inverseJoinColumns = @JoinColumn(name = "user_id",
+                    foreignKey = @ForeignKey(name="FK_FAVORITOS_USER")),
+            name = "favoritos"
+    )
     private List<Bar> favList = new ArrayList<Bar>();
 
     @Builder.Default
-    @Column(name = "ACCOUNT_NON_EXPIRED")
+    @OneToMany(mappedBy = "author")
+    private List<Comment> comments = new ArrayList<Comment>();
+
+    @Builder.Default
     private boolean accountNonExpired = true;
     @Builder.Default
-    @Column(name = "ACCOUNT_NON_LOCKED")
     private boolean accountNonLocked = true;
     @Builder.Default
-    @Column(name = "CREDENTIALS_NON_EXPIRED")
     private boolean credentialsNonExpired = true;
     @Builder.Default
-    @Column(name = "ENABLED")
     private boolean enabled = true;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "ROLES")
     private Set<UserRole> roles;
 
     @CreatedDate
-    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
 
     @Builder.Default
-    @Column(name = "LAST_PASSWORD_CHANGE_AT")
     private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
 

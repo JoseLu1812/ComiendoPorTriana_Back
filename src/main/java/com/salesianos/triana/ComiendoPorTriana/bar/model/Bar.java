@@ -1,5 +1,6 @@
 package com.salesianos.triana.ComiendoPorTriana.bar.model;
 
+import com.salesianos.triana.ComiendoPorTriana.bar.model.converter.StringListConverter;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
@@ -19,36 +20,29 @@ import java.util.UUID;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="BAR_ENTITY")
 public class Bar {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID")
     private UUID id;
 
-    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "OWNER")
-    @OneToMany
+    @ManyToOne
     private User owner;
 
-    @Column(name = "DIRECTION")
     private String direction;
 
-    @Column(name = "IMAGE")
     @Builder.Default
+    @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<String>();
 
-    @Column(name = "COMMENTS")
     @Builder.Default
+    @OneToMany(mappedBy = "bar")
     private List<Comment> comments = new ArrayList<Comment>();
 
-    @Column(name = "CREATED_AT")
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 

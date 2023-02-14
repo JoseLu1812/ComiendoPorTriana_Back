@@ -18,31 +18,26 @@ import java.util.UUID;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="COMMENT_ENTITY")
 public class Comment {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID")
     private UUID id;
 
     @JoinColumn(name = "BAR")
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Bar bar;
 
     @JoinColumn(name = "AUTHOR")
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private User author;
 
-    @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "BODY")
     private String text;
 
-    @Column(name = "CREATED_AT")
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 

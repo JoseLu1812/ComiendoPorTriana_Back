@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface BarRepository extends JpaRepository<Bar, UUID> {
 
-    List<Bar>findByAuthor(String auhtor);
+    List<Bar>findByOwner(String owner);
 
 }

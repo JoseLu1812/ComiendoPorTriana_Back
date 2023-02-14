@@ -17,19 +17,14 @@ import java.util.List;
 public class CreateBarDto {
 
 
-    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "OWNER")
     private User owner;
 
-    @Column(name = "DIRECTION")
     private String direction;
 
-    @Column(name = "IMAGE")
     private List<String> images;
 
 

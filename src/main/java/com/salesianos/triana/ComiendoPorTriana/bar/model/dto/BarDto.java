@@ -14,19 +14,14 @@ import java.util.List;
 @Builder
 public class BarDto {
 
-    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "OWNER")
     private User owner;
 
-    @Column(name = "DIRECTION")
     private String direction;
 
-    @Column(name = "IMAGE")
     private List<String> images;
 
     public static BarDto of(Bar b) {

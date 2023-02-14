@@ -17,17 +17,13 @@ import javax.validation.constraints.Max;
 @Builder
 public class CreateCommentDto {
 
-    @Column(name = "BAR")
     private Bar bar;
 
-    @Column(name = "AUTHOR")
     private User author;
 
-    @Column(name = "TITLE")
     @Max(value=50, message = "{createCommentDto.title.max}")
     private String title;
 
-    @Column(name = "BODY")
     @Max(value=200, message = "{createCommentDto.text.max}")
     private String text;
 
