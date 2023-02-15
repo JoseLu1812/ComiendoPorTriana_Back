@@ -1,9 +1,10 @@
 package com.salesianos.triana.ComiendoPorTriana.security.jwt;
 
+import com.salesianos.triana.ComiendoPorTriana.security.errorhandling.JwtTokenException;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 @Log
 @Service
@@ -27,7 +29,7 @@ public class JwtProvider {
     private String jwtSecret;
 
     @Value("${jwt.duration}")
-    private int jwtLifeInDays;
+    private int jwtLifeInMinutes;
 
     private JwtParser jwtParser;
 
@@ -52,7 +54,7 @@ public class JwtProvider {
                 Date.from(
                         LocalDateTime
                                 .now()
-                                .plusDays(jwtLifeInDays)
+                                .plusDays(jwtLifeInMinutes)
                                 .atZone(ZoneId.systemDefault())
                                 .toInstant()
                 );
@@ -65,6 +67,23 @@ public class JwtProvider {
                 .signWith(secretKey)
                 .compact();
 
+    }
+
+    public boolean validateToken(String token) {
+
+        try {
+            jwtParser.parseClaimsJws(token);
+            return true;
+        } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
+            log.info("Error con el token: " + ex.getMessage());
+            throw new JwtTokenException(ex.getMessage());
+        }
+    }
+
+    public UUID getUserIdFromJwtToken(String token) {
+        return UUID.fromString(
+                jwtParser.parseClaimsJws(token).getBody().getSubject()
+        );
     }
 
 }

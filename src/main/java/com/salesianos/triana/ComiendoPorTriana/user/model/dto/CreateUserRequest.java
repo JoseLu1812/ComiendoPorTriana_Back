@@ -1,6 +1,5 @@
 package com.salesianos.triana.ComiendoPorTriana.user.model.dto;
 
-import com.salesianos.triana.ComiendoPorTriana.validation.annotation.UsernameNotRepeat;
 import com.salesianos.triana.ComiendoPorTriana.validation.annotation.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,6 @@ import javax.validation.constraints.NotEmpty;
 public class CreateUserRequest {
 
     @NotEmpty(message = "{createUserRequest.username.notempty}")
-    @UsernameNotRepeat
     private String username;
 
     @ValidPassword

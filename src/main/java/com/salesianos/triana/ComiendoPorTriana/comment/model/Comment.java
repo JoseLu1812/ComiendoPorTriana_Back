@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class Comment {
     @JoinColumn(name = "AUTHOR")
     @JsonIgnore
     @ManyToOne()
+    @CreatedBy
     private User author;
 
     private String title;
