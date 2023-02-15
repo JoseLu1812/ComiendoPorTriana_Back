@@ -4,7 +4,6 @@ import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.util.List;
 
 @Data
@@ -12,33 +11,28 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class CreateBarDto {
-
+public class EditBarDto {
 
     private String name;
 
     private String description;
-
-    private User owner;
 
     private String direction;
 
     private List<String> images;
 
 
-    public static Bar toBar(CreateBarDto dto) {
+//    public static EditBarDto of(Bar b) {
+ //       return EditBarDto
+//    }
 
+    public static Bar toBar(EditBarDto dto) {
         return Bar.builder()
-                .name(dto.getName())
+                .name(dto.name)
                 .description(dto.getDescription())
-                .owner(dto.getOwner())
                 .direction(dto.getDirection())
                 .images(dto.getImages())
                 .build();
     }
-
-
-
-
 
 }

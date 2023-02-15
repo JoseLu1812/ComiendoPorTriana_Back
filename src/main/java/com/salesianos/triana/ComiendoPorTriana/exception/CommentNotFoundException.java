@@ -4,5 +4,5 @@ import javax.persistence.EntityNotFoundException;
 
 public class CommentNotFoundException extends EntityNotFoundException {
 
-    public CommentNotFoundException() {super("Comentario no disponible");}
+    public CommentNotFoundException(String msg) {super(msg);}
 }
