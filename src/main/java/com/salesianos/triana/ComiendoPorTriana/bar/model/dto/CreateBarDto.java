@@ -26,17 +26,6 @@ public class CreateBarDto {
     private List<String> images;
 
 
-    public static Bar toBar(CreateBarDto dto) {
-
-        return Bar.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .owner(dto.getOwner())
-                .direction(dto.getDirection())
-                .images(dto.getImages())
-                .build();
-    }
-
 
 
 

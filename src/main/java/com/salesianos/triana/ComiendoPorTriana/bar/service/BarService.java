@@ -32,8 +32,7 @@ public class BarService {
         if(opt.isEmpty())
             throw new BarNotFoundException("El Bar con ID %id no ha sido encontrado.");
 
-        Bar result = opt.get();
-        return BarDto.of(result);
+        return BarDto.of(opt.get());
     }
 
     public Page<Bar> findAll(String search, Pageable pageable) {
@@ -51,10 +50,14 @@ public class BarService {
 
     }
 
-    public BarDto add(CreateBarDto dto) {
-        Bar bar = repo.save(CreateBarDto.toBar(dto));
-
-        return BarDto.of(bar);
+    public Bar add(CreateBarDto dto) {
+        return repo.save(Bar.builder()
+                        .name(dto.getName())
+                        .description(dto.getDescription())
+                        .direction(dto.getDirection())
+                        .owner(dto.getOwner())
+                        .images(dto.getImages())
+                        .build());
     }
 
     public Bar edit(UUID id, EditBarDto dto) {
@@ -66,8 +69,15 @@ public class BarService {
                     b.setImages(dto.getImages());
                     return repo.save(b);
                 })
-                .orElseThrow(() -> new BarNotFoundException("El Bar solicitado no existe"));
+                .orElseThrow(() -> new BarNotFoundException("El Bar no existe"));
     }
+
+    public void delete(UUID id){
+        if(repo.existsById(id)){
+            repo.deleteById(id);
+        }
+    }
+
 
 
 }
