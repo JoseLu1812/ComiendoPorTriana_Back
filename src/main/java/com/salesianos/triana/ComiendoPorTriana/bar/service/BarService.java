@@ -6,7 +6,13 @@ import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.CreateBarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.EditBarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.repo.BarRepository;
 import com.salesianos.triana.ComiendoPorTriana.exception.BarNotFoundException;
+import com.salesianos.triana.ComiendoPorTriana.search.spec.GenericSpecificationBuilder;
+import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteria;
+import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteriaExtractor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,19 +36,19 @@ public class BarService {
         return BarDto.of(result);
     }
 
-    public List<BarDto> findAll() {
-        List<Bar> list = repo.findAll();
+    public Page<Bar> findAll(String search, Pageable pageable) {
+        List<SearchCriteria> params = SearchCriteriaExtractor.extractSearchCriteriaList(search);
 
-        if(list.isEmpty())
+        GenericSpecificationBuilder<Bar> specificationBuilder = new GenericSpecificationBuilder<>(params, Bar.class);
+        Specification<Bar> spec =  specificationBuilder.build();
+
+        Page<Bar> bares = repo.findAll(spec, pageable);
+
+        if(bares.isEmpty())
             throw new BarNotFoundException("No se encuentra ningún listado de bares.");
 
-        List<BarDto> result = new ArrayList<BarDto>();
+        return bares;
 
-        for (Bar b:list) {
-            result.add(BarDto.of(b));
-        }
-
-        return result;
     }
 
     public BarDto add(CreateBarDto dto) {
@@ -51,15 +57,16 @@ public class BarService {
         return BarDto.of(bar);
     }
 
-    public BarDto edit(UUID id, EditBarDto dto) {
-        Optional<Bar> opt = repo.findById(id);
-
-        if(opt.isEmpty())
-            throw new BarNotFoundException("El Bar solicitado no existe");
-
-        Bar bar = repo.save(EditBarDto.toBar(dto));
-
-        return BarDto.of(bar);
+    public Bar edit(UUID id, EditBarDto dto) {
+        return repo.findById(id)
+                .map(b -> {
+                    b.setName(dto.getName());
+                    b.setDescription(dto.getDescription());
+                    b.setDirection(dto.getDirection());
+                    b.setImages(dto.getImages());
+                    return repo.save(b);
+                })
+                .orElseThrow(() -> new BarNotFoundException("El Bar solicitado no existe"));
     }
 
 
