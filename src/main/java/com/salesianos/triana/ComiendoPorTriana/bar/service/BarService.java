@@ -30,7 +30,7 @@ public class BarService {
         return BarDto.of(result);
     }
 
-    public List<BarDto> findAll(String owner) {
+    public List<BarDto> findAll() {
         List<Bar> list = repo.findAll();
 
         if(list.isEmpty())
@@ -51,16 +51,16 @@ public class BarService {
         return BarDto.of(bar);
     }
 
-//    public BarDto edit(UUID id, EditBarDto dto) {
-//        Optional<Bar> opt = repo.findById(id);
-//
-//        if(opt.isEmpty())
-//            throw new BarNotFoundException("El Bar solicitado no existe");
-//
-//        Bar bar = repo.save(EditBarDto.toBar(dto));
-//
-//
-//    }
+    public BarDto edit(UUID id, EditBarDto dto) {
+        Optional<Bar> opt = repo.findById(id);
+
+        if(opt.isEmpty())
+            throw new BarNotFoundException("El Bar solicitado no existe");
+
+        Bar bar = repo.save(EditBarDto.toBar(dto));
+
+        return BarDto.of(bar);
+    }
 
 
 }

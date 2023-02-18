@@ -22,9 +22,14 @@ public class EditBarDto {
     private List<String> images;
 
 
-//    public static EditBarDto of(Bar b) {
- //       return EditBarDto
-//    }
+    public static EditBarDto of(Bar b) {
+        return EditBarDto.builder()
+                .name(b.getName())
+                .description(b.getDescription())
+                .direction(b.getDirection())
+                .images(b.getImages())
+                .build();
+    }
 
     public static Bar toBar(EditBarDto dto) {
         return Bar.builder()
