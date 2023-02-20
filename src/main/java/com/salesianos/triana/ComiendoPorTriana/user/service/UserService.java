@@ -1,6 +1,9 @@
 package com.salesianos.triana.ComiendoPorTriana.user.service;
 
 
+import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
+import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
+import com.salesianos.triana.ComiendoPorTriana.exception.NotOwnerException;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import com.salesianos.triana.ComiendoPorTriana.user.model.UserRole;
 import com.salesianos.triana.ComiendoPorTriana.user.model.dto.CreateUserRequest;
@@ -54,27 +57,19 @@ public class UserService {
 
     public Optional<User> edit(User user) {
 
-        // El username no se puede editar
-        // La contraseña se edita en otro método
-
         return userRepository.findById(user.getId())
                 .map(u -> {
                     u.setFullName(user.getFullName());
                     return userRepository.save(u);
                 }).or(() -> Optional.empty());
-
     }
 
     public Optional<User> editPassword(UUID userId, String newPassword) {
-
-        // Aquí no se realizan comprobaciones de seguridad. Tan solo se modifica
-
         return userRepository.findById(userId)
                 .map(u -> {
                     u.setPassword(passwordEncoder.encode(newPassword));
                     return userRepository.save(u);
                 }).or(() -> Optional.empty());
-
     }
 
     public void delete(User user) {
@@ -82,13 +77,34 @@ public class UserService {
     }
 
     public void deleteById(UUID id) {
-        // Prevenimos errores al intentar borrar algo que no existe
         if (userRepository.existsById(id))
             userRepository.deleteById(id);
     }
 
     public boolean passwordMatch(User user, String clearPassword) {
         return passwordEncoder.matches(clearPassword, user.getPassword());
+    }
+
+
+    public boolean checkOwner(Bar bar, UUID id){
+        return userRepository.findFirstById(id)
+                .map(user -> {
+                    boolean isAdmin = user.getOwnership().stream().anyMatch(b -> b.equals(bar));
+                    if (!isAdmin)
+                        throw new NotOwnerException("El usuario no es administrador");
+                    return isAdmin;
+                }).orElseThrow(() -> new NotOwnerException("Usuario sin acceso"));
+    }
+
+
+    public boolean checkCommentOwner(Comment comment, UUID id){
+        return userRepository.findFirstById(id)
+                .map(user -> {
+                   boolean isAuthor = user.getComments().stream().anyMatch(c -> c.equals(comment));
+                   if (!isAuthor)
+                       throw new NotOwnerException("El usuario no es el autor.");
+                   return isAuthor;
+                }).orElseThrow(() -> new NotOwnerException("usuario sin acceso."));
     }
 
 

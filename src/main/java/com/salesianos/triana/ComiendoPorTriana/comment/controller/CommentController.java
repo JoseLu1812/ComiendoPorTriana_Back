@@ -7,12 +7,14 @@ import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CreateCommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.EditCommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.service.CommentService;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -59,13 +61,13 @@ public class CommentController {
 
 
     @PutMapping("bar/{barId}/comment/{comId}")
-    public CommentDto edit(@PathVariable UUID comId, @PathVariable UUID barId, @RequestBody EditCommentDto dto){
-        return CommentDto.of(service.edit(barId,comId,dto));
+    public CommentDto edit(@AuthenticationPrincipal User logged, @PathVariable UUID comId, @PathVariable UUID barId, @RequestBody EditCommentDto dto){
+        return CommentDto.of(service.edit(barId,comId,dto, logged));
     }
 
     @DeleteMapping("bar/{barId}/comment/{comId}")
-    public ResponseEntity<?> delete(@PathVariable UUID comId, @PathVariable UUID barId){
-        service.delete(barId,comId);
+    public ResponseEntity<?> delete(@AuthenticationPrincipal User logged, @PathVariable UUID comId, @PathVariable UUID barId){
+        service.delete(barId,comId, logged);
         return ResponseEntity.noContent().build();
     }
 

@@ -9,6 +9,8 @@ import com.salesianos.triana.ComiendoPorTriana.exception.BarNotFoundException;
 import com.salesianos.triana.ComiendoPorTriana.search.spec.GenericSpecificationBuilder;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteria;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteriaExtractor;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
+import com.salesianos.triana.ComiendoPorTriana.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,8 @@ import java.util.UUID;
 public class BarService {
 
     private final BarRepository repo;
+
+    private final UserService userService;
 
     public BarDto findById(UUID id) {
         Optional<Bar> opt = repo.findById(id);
@@ -50,19 +54,20 @@ public class BarService {
 
     }
 
-    public Bar add(CreateBarDto dto) {
+    public Bar add(CreateBarDto dto, final User logged) {
         return repo.save(Bar.builder()
                         .name(dto.getName())
                         .description(dto.getDescription())
                         .direction(dto.getDirection())
-                        .owner(dto.getOwner())
+                        .owner(logged)
                         .images(dto.getImages())
                         .build());
     }
 
-    public Bar edit(UUID id, EditBarDto dto) {
+    public Bar edit(UUID id, EditBarDto dto, final User logged) {
         return repo.findById(id)
                 .map(b -> {
+                    userService.checkOwner(b, logged.getId());
                     b.setName(dto.getName());
                     b.setDescription(dto.getDescription());
                     b.setDirection(dto.getDirection());
@@ -72,9 +77,14 @@ public class BarService {
                 .orElseThrow(() -> new BarNotFoundException("El Bar no existe"));
     }
 
-    public void delete(UUID id){
+    public void delete(UUID id, final User logged){
         if(repo.existsById(id)){
-            repo.deleteById(id);
+            repo.findById(id)
+                    .map(bar -> {
+                        userService.checkOwner(bar, logged.getId());
+                        repo.delete(bar);
+                        return "";
+                    });
         }
     }
 

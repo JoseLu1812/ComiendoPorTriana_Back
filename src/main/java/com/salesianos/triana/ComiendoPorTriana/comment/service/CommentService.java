@@ -12,6 +12,8 @@ import com.salesianos.triana.ComiendoPorTriana.exception.CommentNotFoundExceptio
 import com.salesianos.triana.ComiendoPorTriana.search.spec.GenericSpecificationBuilder;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteria;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteriaExtractor;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
+import com.salesianos.triana.ComiendoPorTriana.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,8 @@ public class CommentService {
     private final CommentRepository repo;
 
     private final BarRepository barRepository;
+
+    private final UserService userService;
 
 
     public CommentDto findById(UUID id) {
@@ -78,28 +82,28 @@ public class CommentService {
     }
 
 
-    public Comment edit(UUID barId, UUID comId, EditCommentDto dto){
+    public Comment edit(UUID barId, UUID comId, EditCommentDto dto, final User logged){
         Optional<Comment> opt = repo.findCommentFromBar(barId, comId);
 
         if (opt.isEmpty())
             throw new CommentNotFoundException("El comentario no existe");
 
         Comment comment = opt.get();
-
+        userService.checkCommentOwner(comment, logged.getId());
         comment.setTitle(dto.getTitle());
         comment.setText(dto.getText());
         return repo.save(comment);
     }
 
 
-    public void delete(UUID barId, UUID comId){
+    public void delete(UUID barId, UUID comId, final User logged){
         Optional<Comment> opt = repo.findCommentFromBar(barId, comId);
 
         if (opt.isEmpty())
             throw new CommentNotFoundException("El comentario no existe");
 
         Comment comment = opt.get();
-
+        userService.checkCommentOwner(comment, logged.getId());
         repo.delete(comment);
     }
 
@@ -110,7 +114,6 @@ public class CommentService {
             throw new CommentNotFoundException("Comentario no encontrado");
 
         return CommentDto.of(opt.get());
-
     }
 
 

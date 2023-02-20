@@ -8,12 +8,14 @@ import com.salesianos.triana.ComiendoPorTriana.bar.service.BarService;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.service.CommentService;
+import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -45,8 +47,8 @@ public class BarController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<BarDto> createNewBar(@Valid @RequestBody CreateBarDto dto) {
-        Bar bar = service.add(dto);
+    public ResponseEntity<BarDto> createNewBar(@AuthenticationPrincipal User logged, @Valid @RequestBody CreateBarDto dto) {
+        Bar bar = service.add(dto, logged);
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -59,14 +61,14 @@ public class BarController {
 
 
     @PutMapping("/edit/{id}")
-    public BarDto edit(@PathVariable UUID id, @RequestBody EditBarDto dto) {
-        return BarDto.of(service.edit(id,dto));
+    public BarDto edit(@AuthenticationPrincipal User logged, @PathVariable UUID id, @RequestBody EditBarDto dto) {
+        return BarDto.of(service.edit(id,dto, logged));
     }
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable UUID id) {
-        service.delete(id);
+    public ResponseEntity<?> delete(@AuthenticationPrincipal User logged, @PathVariable UUID id) {
+        service.delete(id, logged);
 
         return ResponseEntity.noContent().build();
     }
