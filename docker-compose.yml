@@ -1,0 +1,12 @@
+services:
+
+  db:
+    image: 'postgres:14-alpine'
+    container_name: cptriana
+    restart: always
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5555:5432"
