@@ -2,6 +2,7 @@ package com.salesianos.triana.ComiendoPorTriana.comment.repo;
 
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -19,11 +20,5 @@ public interface CommentRepository extends JpaRepository<Comment, UUID>, JpaSpec
             """)
     public Optional<Comment> findCommentFromBar(@Param("bar") UUID bar, @Param("comment") UUID comment);
 
-    @Query("""
-            select b.comments
-            from Bar b
-            where b.id = :bar
-            """)
-    public Page<Comment> findBarComments(@Param("bar") UUID bar);
 
 }

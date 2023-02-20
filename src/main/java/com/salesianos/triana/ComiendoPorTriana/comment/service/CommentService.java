@@ -113,13 +113,5 @@ public class CommentService {
 
     }
 
-    public Page<Comment> findBarComments(UUID id){
-        Page<Comment> result = repo.findBarComments(id);
-
-        if(result.isEmpty())
-            throw new CommentNotFoundException("No hay comentarios");
-
-        return result;
-    }
 
 }
