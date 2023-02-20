@@ -15,7 +15,6 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
 @Getter
 @Setter
@@ -45,5 +44,20 @@ public class Bar {
 
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public void addToComments(Comment c){
+        this.getComments().add(c);
+    }
+    public void deleteFromComments(Comment c){
+        this.getComments().remove(c);
+    }
+
+    public void addToImages(String image){
+        this.getImages().add(image);
+    }
+
+    public void deleteFromImages(String image){
+        this.getImages().remove(image);
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.comment.controller;
 
+import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.BarDto;
+import com.salesianos.triana.ComiendoPorTriana.bar.service.BarService;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CreateCommentDto;
@@ -20,27 +22,31 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/comment")
 @Tag(name = "Comment", description = "Controlador para manejar peticiones de objetos tipo Comment")
 public class CommentController {
 
     private final CommentService service;
 
-    @GetMapping("/")
-    public Page<Comment> search(@RequestParam(value = "search", defaultValue = "") String search,
-                                @PageableDefault(size = 12, page = 0) Pageable pageable){
-        return service.findAll(search, pageable);
+    private final BarService barService;
+
+    @GetMapping("/bar/{barId}/comment/")
+    public Page<Comment> searchBarComments(@RequestParam(value = "search", defaultValue = "") String search,
+                                           @PageableDefault(size = 12, page = 0) Pageable pageable,
+                                           @PathVariable UUID barId){
+        return service.findAll(search, pageable, barId);
     }
 
-    @GetMapping("/{id}")
-    public CommentDto findByid(@PathVariable UUID id){
-        return service.findById(id);
+    @GetMapping("/bar/{barId}/comment/{comId}")
+    public CommentDto findBarComment(@PathVariable UUID barId, @PathVariable UUID comId){
+        BarDto bar = barService.findById(barId);
+
+        return service.findCommentFromBar(barId, comId);
     }
 
 
-    @PostMapping("/new")
-    public ResponseEntity<CommentDto> createNewComment(@Valid @RequestBody CreateCommentDto dto){
-        Comment comment = service.add(dto);
+    @PostMapping("bar/{barId}/comment/")
+    public ResponseEntity<CommentDto> createNewComment(@Valid @RequestBody CreateCommentDto dto, @PathVariable UUID barId){
+        Comment comment = service.add(dto, barId);
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -52,14 +58,14 @@ public class CommentController {
     }
 
 
-    @PutMapping("/edit/{id}")
-    public CommentDto edit(@PathVariable UUID id, @RequestBody EditCommentDto dto){
-        return CommentDto.of(service.edit(id,dto));
+    @PutMapping("bar/{barId}/comment/{comId}")
+    public CommentDto edit(@PathVariable UUID comId, @PathVariable UUID barId, @RequestBody EditCommentDto dto){
+        return CommentDto.of(service.edit(barId,comId,dto));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable UUID id){
-        service.delete(id);
+    @DeleteMapping("bar/{barId}/comment/{comId}")
+    public ResponseEntity<?> delete(@PathVariable UUID comId, @PathVariable UUID barId){
+        service.delete(barId,comId);
         return ResponseEntity.noContent().build();
     }
 

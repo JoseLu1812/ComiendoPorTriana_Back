@@ -30,7 +30,7 @@ public class BarService {
         Optional<Bar> opt = repo.findById(id);
 
         if(opt.isEmpty())
-            throw new BarNotFoundException("El Bar con ID %id no ha sido encontrado.");
+            throw new BarNotFoundException("El Bar solicitado no ha sido encontrado.");
 
         return BarDto.of(opt.get());
     }
@@ -77,7 +77,6 @@ public class BarService {
             repo.deleteById(id);
         }
     }
-
 
 
 }

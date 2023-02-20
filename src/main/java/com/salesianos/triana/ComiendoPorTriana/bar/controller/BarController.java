@@ -5,6 +5,9 @@ import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.BarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.CreateBarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.EditBarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.service.BarService;
+import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
+import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CommentDto;
+import com.salesianos.triana.ComiendoPorTriana.comment.service.CommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -25,6 +30,8 @@ import java.util.UUID;
 public class BarController {
 
     private final BarService service;
+
+    private final CommentService commentService;
 
     @GetMapping("/{id}")
     public BarDto findById(@PathVariable UUID id) {

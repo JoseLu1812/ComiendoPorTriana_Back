@@ -1,5 +1,6 @@
 package com.salesianos.triana.ComiendoPorTriana.search.spec;
 
+import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteria;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -46,7 +47,9 @@ public class GenericSpecification<T> implements Specification<T> {
             return criteriaBuilder.lessThanOrEqualTo(
                     root.<String>get(key), value.toString());
         } else if (operator.equalsIgnoreCase(":")) {
-            if(isString(type)) {
+            if(isBarType(type)){
+                return criteriaBuilder.equal(root.join(key).get("id").as(String.class), value.toString());
+            }else if(isString(type)) {
                 return criteriaBuilder.like(
                         root.get(searchCriteria.getKey()), "%" + searchCriteria.getValue().toString() + "%"
                 );
@@ -72,6 +75,8 @@ public class GenericSpecification<T> implements Specification<T> {
     private boolean isTemporal(Class clazz) {
         return Arrays.stream(clazz.getInterfaces()).anyMatch(c -> c.getName() == "java.time.temporal.Temporal");
     }
+
+    private boolean isBarType(Class clazz){ return clazz.isAssignableFrom(Bar.class);}
 
     private boolean isLocalDate(Class clazz) {
         return clazz == LocalDate.class;

@@ -1,10 +1,13 @@
 package com.salesianos.triana.ComiendoPorTriana.comment.service;
 
+import com.salesianos.triana.ComiendoPorTriana.bar.model.Bar;
+import com.salesianos.triana.ComiendoPorTriana.bar.repo.BarRepository;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.CreateCommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.dto.EditCommentDto;
 import com.salesianos.triana.ComiendoPorTriana.comment.repo.CommentRepository;
+import com.salesianos.triana.ComiendoPorTriana.exception.BarNotFoundException;
 import com.salesianos.triana.ComiendoPorTriana.exception.CommentNotFoundException;
 import com.salesianos.triana.ComiendoPorTriana.search.spec.GenericSpecificationBuilder;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteria;
@@ -25,6 +28,8 @@ public class CommentService {
 
     private final CommentRepository repo;
 
+    private final BarRepository barRepository;
+
 
     public CommentDto findById(UUID id) {
         Optional<Comment> opt = repo.findById(id);
@@ -36,8 +41,9 @@ public class CommentService {
     }
 
 
-    public Page<Comment> findAll(String search, Pageable pageable) {
+    public Page<Comment> findAll(String search, Pageable pageable, UUID id) {
         List<SearchCriteria> params = SearchCriteriaExtractor.extractSearchCriteriaList(search);
+        params.add(new SearchCriteria("bar", ":", id));
 
         GenericSpecificationBuilder<Comment> specificationBuilder = new GenericSpecificationBuilder<>(params, Comment.class);
         Specification<Comment> spec =  specificationBuilder.build();
@@ -51,31 +57,69 @@ public class CommentService {
     }
 
 
-    public Comment add(CreateCommentDto dto){
-        return repo.save(Comment.builder()
-                        .title(dto.getTitle())
-                        .text(dto.getText())
-                        .author(dto.getAuthor())
-                        .bar(dto.getBar())
-                        .build());
+
+    public Comment add(CreateCommentDto dto, UUID id){
+        Optional<Bar> opt = barRepository.findById(id);
+
+        if(opt.isEmpty())
+            throw new BarNotFoundException("El Bar solicitado no ha sido encontrado.");
+
+        Bar bar = opt.get();
+
+        Comment comment = Comment.builder()
+                                .title(dto.getTitle())
+                                .text(dto.getText())
+                                .author(dto.getAuthor())
+                                .bar(dto.getBar())
+                                .build();
+
+        bar.getComments().add(comment);
+        return comment;
     }
 
 
-    public Comment edit(UUID id, EditCommentDto dto){
-        return repo.findById(id)
-                .map(comment -> {
-                    comment.setTitle(dto.getTitle());
-                    comment.setText(dto.getText());
-                    return repo.save(comment);
-                })
-                .orElseThrow(() -> new CommentNotFoundException("El comentario no existe"));
+    public Comment edit(UUID barId, UUID comId, EditCommentDto dto){
+        Optional<Comment> opt = repo.findCommentFromBar(barId, comId);
+
+        if (opt.isEmpty())
+            throw new CommentNotFoundException("El comentario no existe");
+
+        Comment comment = opt.get();
+
+        comment.setTitle(dto.getTitle());
+        comment.setText(dto.getText());
+        return repo.save(comment);
     }
 
 
-    public void delete(UUID id){
-        if(repo.existsById(id))
-            repo.deleteById(id);
+    public void delete(UUID barId, UUID comId){
+        Optional<Comment> opt = repo.findCommentFromBar(barId, comId);
+
+        if (opt.isEmpty())
+            throw new CommentNotFoundException("El comentario no existe");
+
+        Comment comment = opt.get();
+
+        repo.delete(comment);
     }
 
+    public CommentDto findCommentFromBar(UUID barId, UUID commentID) {
+        Optional<Comment> opt = repo.findCommentFromBar(barId, commentID);
+
+        if(opt.isEmpty())
+            throw new CommentNotFoundException("Comentario no encontrado");
+
+        return CommentDto.of(opt.get());
+
+    }
+
+    public Page<Comment> findBarComments(UUID id){
+        Page<Comment> result = repo.findBarComments(id);
+
+        if(result.isEmpty())
+            throw new CommentNotFoundException("No hay comentarios");
+
+        return result;
+    }
 
 }
