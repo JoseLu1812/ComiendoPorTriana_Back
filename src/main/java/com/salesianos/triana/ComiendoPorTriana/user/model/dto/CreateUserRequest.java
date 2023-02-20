@@ -24,8 +24,6 @@ public class CreateUserRequest {
     @ValidPassword
     private String verifyPassword;
 
-    private String avatar;
-
     @NotEmpty(message = "createUserRequest.fullname.notempty")
     private String fullName;
 

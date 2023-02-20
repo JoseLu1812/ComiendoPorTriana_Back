@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="USER")
+@Table(name="user_entity")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -47,8 +47,6 @@ public class User implements UserDetails {
     private String email;
 
     private String fullName;
-
-    private String avatar;
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)

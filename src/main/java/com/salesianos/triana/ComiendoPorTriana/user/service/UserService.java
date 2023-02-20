@@ -25,7 +25,6 @@ public class UserService {
         User user =  User.builder()
                 .username(createUserRequest.getUsername())
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
-                .avatar(createUserRequest.getAvatar())
                 .fullName(createUserRequest.getFullName())
                 .roles(roles)
                 .build();
@@ -60,7 +59,6 @@ public class UserService {
 
         return userRepository.findById(user.getId())
                 .map(u -> {
-                    u.setAvatar(user.getAvatar());
                     u.setFullName(user.getFullName());
                     return userRepository.save(u);
                 }).or(() -> Optional.empty());
