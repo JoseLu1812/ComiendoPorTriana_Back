@@ -9,17 +9,17 @@ insert into user_roles (user_id, roles) values ('c8d2cf0d-1868-4ced-892a-27bea77
 insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-02', true, 'jeh@gmail.com', true, 'Julia Estévez Hidalgo', '2023-02-02', '{bcrypt}$2a$12$CPcJtGCLIQzdNqkbSSfnzebwvMnIDgiY0IQ5QZwqkc8ncCXyCFG4u', 'Juliaeh', 'd9554666-0096-469d-96c2-eb20e31dcb23'); --Contra: Cordoba_123
 insert into user_roles (user_id, roles) values ('d9554666-0096-469d-96c2-eb20e31dcb23', 2);
 
-insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-03', true, 'mpnt@gmail.com' true, 'María del Pilar Navas Tenor', '2023-02-03', 'Mairena_123', 'MPilarnt', '9d6076d7-233d-4111-bd19-1c589d2a2764');
-insert into user_roles (user_id, roles) values ('9d6076d7-233d-4111-bd19-1c589d2a2764', 3);
+--insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-03', true, 'mpnt@gmail.com' true, 'María del Pilar Navas Tenor', '2023-02-03', 'Mairena_123', 'MPilarnt', '9d6076d7-233d-4111-bd19-1c589d2a2764');
+--insert into user_roles (user_id, roles) values ('9d6076d7-233d-4111-bd19-1c589d2a2764', 3);
 
 
 insert into bar (created_at , description , direction , images , name, owner_id, id) values ( '2023-02-05', 'Bar de toda la vida al más puro estilo sevillano. Caracterizado por sus serranitos, también destacar su alioli y su flamenquín.', 'C/Justino Matute, 6', 'images', 'Bar Cibeles 2', 'c8d2cf0d-1868-4ced-892a-27bea770def6', '80adfa7a-6a63-42f3-8a1e-153039544e7b');
 insert into bar (created_at , description , direction , images , name, owner_id, id) values ( '2023-02-06', 'Este clásico bar trianero lleva desde 1970 sirviendo codornices fritas y adobadas y son los pajaritos más celebrados de toda Sevilla.', 'Avenida Santa Cecilia, 2', 'images', 'Bar Ruperto', 'd9554666-0096-469d-96c2-eb20e31dcb23', 'c2dde920-80df-4743-86d4-3545269edcb7');
 
 
-insert into favoritos (bar_id , user_id) values ( '80adfa7a-6a63-42f3-8a1e-153039544e7b', '9d6076d7-233d-4111-bd19-1c589d2a2764');
+--insert into favoritos (bar_id , user_id) values ( '80adfa7a-6a63-42f3-8a1e-153039544e7b', '9d6076d7-233d-4111-bd19-1c589d2a2764');
 
-insert into comment (created_at, text, title, author, bar, id) values ( '2023-02-15', 'Muy buen lugar y quede satisfecho.', 'Excelente', '9d6076d7-233d-4111-bd19-1c589d2a2764', 'c2dde920-80df-4743-86d4-3545269edcb7' ,'b93efc37-15ef-4945-8552-9ca37a971761');
+--insert into comment (created_at, text, title, author, bar, id) values ( '2023-02-15', 'Muy buen lugar y quede satisfecho.', 'Excelente', '9d6076d7-233d-4111-bd19-1c589d2a2764', 'c2dde920-80df-4743-86d4-3545269edcb7' ,'b93efc37-15ef-4945-8552-9ca37a971761');
 
 
 
