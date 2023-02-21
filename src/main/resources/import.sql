@@ -1,12 +1,12 @@
 
 
-insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-01-31', true, 'jlhn@gmail.com', true, 'José Luis Hidalgo Navas', '2023-02-01', 'Master_1812', 'Joseluhn', '53395e14-60d3-46d8-804f-fafd86c72a19');
+insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-01-31', true, 'jlhn@gmail.com', true, 'José Luis Hidalgo Navas', '2023-02-01', '{bcrypt}$2a$12$MDdQ80jBSFBCzQy1EUrrGeXjZ6VpHGTrML8AUPbVdoMgHZxOYlNMO', 'Joseluhn', '53395e14-60d3-46d8-804f-fafd86c72a19'); --Contra: Master_1812
 insert into user_roles (user_id, roles) values ('53395e14-60d3-46d8-804f-fafd86c72a19', 1);
 
-insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-01', true, 'fjdn@gmail.com', true, 'Francisco josé Domínguez Navas', '2023-02-01', 'Triana_123', 'Franjdn', 'c8d2cf0d-1868-4ced-892a-27bea770def6');
+insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-01', true, 'fjdn@gmail.com', true, 'Francisco José Domínguez Navas', '2023-02-01', '{bcrypt}$2a$12$yQyiJvrPoU4K5TfRG7UpVOdjDm36APuJFk6XpywwEq.9XsV3aWDam', 'Franjdn', 'c8d2cf0d-1868-4ced-892a-27bea770def6'); --Contra: Triana_123
 insert into user_roles (user_id, roles) values ('c8d2cf0d-1868-4ced-892a-27bea770def6', 2);
 
-insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-02', true, 'jeh@gmail.com', true, 'Julia Estévez Hidalgo', '2023-02-02', 'Cordoba_123', 'Julaeh', 'd9554666-0096-469d-96c2-eb20e31dcb23');
+insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-02', true, 'jeh@gmail.com', true, 'Julia Estévez Hidalgo', '2023-02-02', '{bcrypt}$2a$12$CPcJtGCLIQzdNqkbSSfnzebwvMnIDgiY0IQ5QZwqkc8ncCXyCFG4u', 'Juliaeh', 'd9554666-0096-469d-96c2-eb20e31dcb23'); --Contra: Cordoba_123
 insert into user_roles (user_id, roles) values ('d9554666-0096-469d-96c2-eb20e31dcb23', 2);
 
 insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-03', true, 'mpnt@gmail.com' true, 'María del Pilar Navas Tenor', '2023-02-03', 'Mairena_123', 'MPilarnt', '9d6076d7-233d-4111-bd19-1c589d2a2764');
@@ -25,7 +25,6 @@ insert into comment (created_at, text, title, author, bar, id) values ( '2023-02
 
 --
 --
---insert into user (id, username, password, email, full_name, account_non_locked, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ( 53395e14-60d3-46d8-804f-fafd86c72a19, 'Joseluhn', 'Triana2023', 'jlhn@gmail.com', 'José Luis Hidalgo Navas', true, true, true, true, '2023-01-31','2023-02-01');
 --insert into user (id, username, password, email, full_name, account_non_locked, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ( a4993c76-a232-442f-ab71-dd3e0342de96, 'AgEntRen', '@E@pgK75av', 'agp@email.com', 'Adolfo García Perez', true, true, true, true, '2023-01-31','2023-02-01');
 --insert into user (id, username, password, email, full_name, account_non_locked, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ( 5cbdc9a6-abb7-4b8d-9766-6edc374ed096, 'rENteRLe', 'eMe1_@7dmQ', 'pmm@email.com', 'Paola Madrid Morata', true, true, true, true, '2023-01-31','2023-02-01');
 --insert into user (id, username, password, email, full_name, account_non_locked, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ( 117b5abd-b3e2-4b5e-a12a-f02b76204aee, 'hINglING', 'Ct7cF9_fXp', 'smc@email.com', 'Sebastian Mateo Casals', true, true, true, true, '2023-01-31','2023-02-01');

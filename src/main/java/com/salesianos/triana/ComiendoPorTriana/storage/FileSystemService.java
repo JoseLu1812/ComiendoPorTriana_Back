@@ -1,6 +1,7 @@
 package com.salesianos.triana.ComiendoPorTriana.storage;
 
 import com.salesianos.triana.ComiendoPorTriana.exception.StorageException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -19,21 +20,23 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 @Service
-public class FileSystemService implements StorageService{
+public class FileSystemService implements StorageService {
 
-    @Value("${storage.location}")
-    private String storageLocation;
     private Path rootLocation;
 
     @Override
     @PostConstruct
     public void init() {
-        rootLocation = Paths.get(storageLocation);
-        try{
+        try {
             Files.createDirectories(rootLocation);
-        }catch (IOException e) {
-            throw new StorageException("No se puede inilializar el almacenamiento de archivos", e);
         }
+        catch (IOException e) {
+            throw new StorageException("Could not initialize storage", e);
+        }
+    }
+    @Autowired
+    public FileSystemService(StorageProperties properties) {
+        this.rootLocation = Paths.get(properties.getLocation());
     }
 
     @Override
