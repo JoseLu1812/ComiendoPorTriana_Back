@@ -17,10 +17,6 @@ insert into bar (created_at , description , direction , images , name, owner_id,
 insert into bar (created_at , description , direction , images , name, owner_id, id) values ( '2023-02-06', 'Este clásico bar trianero lleva desde 1970 sirviendo codornices fritas y adobadas y son los pajaritos más celebrados de toda Sevilla.', 'Avenida Santa Cecilia, 2', 'images', 'Bar Ruperto', 'd9554666-0096-469d-96c2-eb20e31dcb23', 'c2dde920-80df-4743-86d4-3545269edcb7');
 
 
---insert into favoritos (bar_id , user_id) values ( '80adfa7a-6a63-42f3-8a1e-153039544e7b', '9d6076d7-233d-4111-bd19-1c589d2a2764');
-
---insert into comment (created_at, text, title, author, bar, id) values ( '2023-02-15', 'Muy buen lugar y quede satisfecho.', 'Excelente', '9d6076d7-233d-4111-bd19-1c589d2a2764', 'c2dde920-80df-4743-86d4-3545269edcb7' ,'b93efc37-15ef-4945-8552-9ca37a971761');
-
 
 
 --
@@ -63,39 +59,5 @@ insert into bar (created_at , description , direction , images , name, owner_id,
 --insert into bar (id, name, description, direction, owner, images, created_at) values ( a3c714bb-8588-4591-a7d1-3fa058304c9c, "Abades Triana", "Muy versátil, su moderna carta se adapta tanto a cenas románticas como comidas de empresa, como tener la posibilidad de tomarte una copa etc sin perder ni un ápice en modernidad o calidad en el servicio.", 'C/Betis, 69', 53395e14-60d3-46d8-804f-fafd86c72a19, 'imagen', '2023-02-18');
 --insert into bar (id, name, description, direction, owner, images, created_at) values ( 80adfa7a-6a63-42f3-8a1e-153039544e7b, 'Bar Cibeles 2', 'Bar de toda la vida al más puro estilo sevillano. Caracterizado por sus serranitos, también destacar su alioli y su flamenquín.', 'C/Justino Matute, 6', d9554666-0096-469d-96c2-eb20e31dcb23, 'imagen', '2023-01-01');
 --insert into bar (id, name, description, direction, owner, images, created_at) values ( b8ccde1e-59c7-4245-8e13-264e76beb728, 'Restaurante Por la boca muere el pez tapas', 'Destacada por sus terrazas interior y exterior, y a su vez por el trato al personal, consta de una amplia y exquisita carta, donde se recomienda la ensaladilla y croquetas de rabo de toro.', 'C/ López de Gómara, 59', 062a6a92-98eb-43c8-bbc0-4089b36962a4, 'imagen', '2023-01-10');
---
---
---
---
---
---insert into favoritos(bar_id, user_id) values ( c2dde920-80df-4743-86d4-3545269edcb7, d9554666-0096-469d-96c2-eb20e31dcb23);
---insert into favoritos(bar_id, user_id) values ( 464f01c6-7f8b-4afb-b9ba-44fdf9db9631, d9554666-0096-469d-96c2-eb20e31dcb23);
---insert into favoritos(bar_id, user_id) values ( 3bb95209-da68-4f55-9eed-ba0001a1ad3c, d9554666-0096-469d-96c2-eb20e31dcb23);
---insert into favoritos(bar_id, user_id) values ( b8ccde1e-59c7-4245-8e13-264e76beb728, d9554666-0096-469d-96c2-eb20e31dcb23);
---insert into favoritos(bar_id, user_id) values ( 9f26b992-027b-4290-8851-34bc5c40e36f, d5794d4c-bd38-4f6d-8462-056072d881d4);
---insert into favoritos(bar_id, user_id) values ( 912b2cb8-389f-408a-889d-95ea65250e67, d5794d4c-bd38-4f6d-8462-056072d881d4);
---insert into favoritos(bar_id, user_id) values ( c2dde920-80df-4743-86d4-3545269edcb7, d5794d4c-bd38-4f6d-8462-056072d881d4);
---insert into favoritos(bar_id, user_id) values ( 63d502f3-3c5e-4eef-ae9c-21840e243faf, d5794d4c-bd38-4f6d-8462-056072d881d4);
---insert into favoritos(bar_id, user_id) values ( a7b81431-43a1-4e72-8685-3647f12b3047, d5794d4c-bd38-4f6d-8462-056072d881d4);
---insert into favoritos(bar_id, user_id) values ( 80adfa7a-6a63-42f3-8a1e-153039544e7b, cd728c15-3f48-4104-994b-956560e52f82);
---insert into favoritos(bar_id, user_id) values ( 625cd031-1a54-4d3d-a6bc-b835909fa18e, cd728c15-3f48-4104-994b-956560e52f82);
---insert into favoritos(bar_id, user_id) values ( 7055f932-a1ea-4fe7-a4b2-0da9a871f644, b4b2af1f-cbfa-4f2e-8039-33b522f4e211);
---insert into favoritos(bar_id, user_id) values ( a8046137-373a-40a7-85f3-8d5f241bbceb, b4b2af1f-cbfa-4f2e-8039-33b522f4e211);
---insert into favoritos(bar_id, user_id) values ( db1ac247-571a-43cf-82ce-411728783c07, b4b2af1f-cbfa-4f2e-8039-33b522f4e211);
---insert into favoritos(bar_id, user_id) values ( 63d502f3-3c5e-4eef-ae9c-21840e243faf, 9d6076d7-233d-4111-bd19-1c589d2a2764);
---insert into favoritos(bar_id, user_id) values ( 3bb95209-da68-4f55-9eed-ba0001a1ad3c, 9d6076d7-233d-4111-bd19-1c589d2a2764);
---insert into favoritos(bar_id, user_id) values ( 464f01c6-7f8b-4afb-b9ba-44fdf9db9631, 9d6076d7-233d-4111-bd19-1c589d2a2764);
---insert into favoritos(bar_id, user_id) values ( bf7c2b27-6396-4abf-8eed-b93933290621, 9d6076d7-233d-4111-bd19-1c589d2a2764);
---insert into favoritos(bar_id, user_id) values ( b8ccde1e-59c7-4245-8e13-264e76beb728, 9d6076d7-233d-4111-bd19-1c589d2a2764);
---
---
---
---
---insert into comment (id, text, title, author, bar, created_at) values ( , "", "", , , );
---
---
---
---
---
 --
 --
