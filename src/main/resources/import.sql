@@ -21,15 +21,15 @@ insert into user_entity (account_non_expired, account_non_locked, created_at, cr
 insert into user_roles (user_id, roles) values ('062a6a92-98eb-43c8-bbc0-4089b36962a4', 0);
 
 insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-12', true, 'mcampos@gmail.com', true, 'Miguel Campos Rivera', '2023-02-11', '{bcrypt}$2a$12$hk.rJWIH.eBLmqcI63DEUuSr9s5Je/axZ7tANsUIjhlVYQtK8HQiu', 'MiguelC6', 'e70c9108-ddcf-416b-a957-01feed566a64'); -- MisHijos_6
-insert int user_roles (user_id, roles) values ('e70c9108-ddcf-416b-a957-01feed566a64', 1);
+insert into user_roles (user_id, roles) values ('e70c9108-ddcf-416b-a957-01feed566a64', 1);
 
 insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-15', true, 'conchiv@gmail.com', true, 'Concepción Herrera Viso', '2023-02-15', '{bcrypt}$2a$12$XH1Kslcn8EGCWqxavdWpFOVDGNLRgTZFcP/poL3t6ZTc790O7tOjS', 'ConchiHV', 'e31194db-3c18-47a5-bfdb-172ceebf7660'); --Cordoba_123
-insert int user_roles (user_id, roles) values ('e31194db-3c18-47a5-bfdb-172ceebf7660', 1);
+insert into user_roles (user_id, roles) values ('e31194db-3c18-47a5-bfdb-172ceebf7660', 1);
 
 insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-15', true, 'paquirri@gmail.com', true, 'Francisco Hidalgo Sánchez', '2023-02-18', '{bcrypt}$2a$12$6yOAPJ92MtllB2TOw.Fq3e1X2JqD9ufAOASXsVB4WLNMKGa9MWcJm', 'PaquirriH', 'bbc620d2-b534-4e6f-91bf-8163a164df43'); -- Arcangel_123
-insert int user_roles (user_id, roles) values ('bbc620d2-b534-4e6f-91bf-8163a164df43', 1);
+insert into user_roles (user_id, roles) values ('bbc620d2-b534-4e6f-91bf-8163a164df43', 1);
 
-insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-20', true, 'mpnt@gmail.com' true, 'María del Pilar Navas Tenor', '2023-02-20', '{bcrypt}$2a$12$67RB4S92tG.MbeyrffgeC.XNT.8/u/tV1xVZvp6SeejovhEAIbayu', 'MPilarnt', '9d6076d7-233d-4111-bd19-1c589d2a2764'); -- Mairena_123
+insert into user_entity (account_non_expired, account_non_locked, created_at, credentials_non_expired, email, enabled, full_name, last_password_change_at, password, username, id) values ( true, true, '2023-02-20', true, 'mpnt@gmail.com', true, 'María del Pilar Navas Tenor', '2023-02-20', '{bcrypt}$2a$12$67RB4S92tG.MbeyrffgeC.XNT.8/u/tV1xVZvp6SeejovhEAIbayu', 'MPilarnt', '9d6076d7-233d-4111-bd19-1c589d2a2764'); -- Mairena_123
 insert into user_roles (user_id, roles) values ('9d6076d7-233d-4111-bd19-1c589d2a2764', 1);
 
 
