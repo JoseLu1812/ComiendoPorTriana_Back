@@ -75,9 +75,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/bar/**").hasAnyRole()
-                .antMatchers("/bar/**").hasRole("BARMAN, ADMIN")
-                .antMatchers("/auth/register/admin").hasRole("ADMIN")
+                //.antMatchers(HttpMethod.GET, "/bar/**").hasAnyRole()
+                .antMatchers("/bar/**").hasRole("BARMAN")
+                .antMatchers("/auth/register/admin").hasRole("BARMAN")
                 .anyRequest().permitAll();
 
 

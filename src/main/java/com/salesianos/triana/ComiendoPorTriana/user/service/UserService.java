@@ -86,15 +86,15 @@ public class UserService {
     }
 
 
-    public boolean checkOwner(Bar bar, UUID id){
-        return userRepository.findFirstById(id)
-                .map(user -> {
-                    boolean isAdmin = user.getOwnership().stream().anyMatch(b -> b.equals(bar));
-                    if (!isAdmin)
-                        throw new NotOwnerException("El usuario no es administrador");
-                    return isAdmin;
-                }).orElseThrow(() -> new NotOwnerException("Usuario sin acceso"));
-    }
+//    public boolean checkOwner(Bar bar, UUID id){
+//        return userRepository.findFirstById(id)
+//                .map(user -> {
+//                    boolean isAdmin = user.getOwnership().stream().anyMatch(b -> b.equals(bar));
+//                    if (!isAdmin)
+//                        throw new NotOwnerException("El usuario no es administrador");
+//                    return isAdmin;
+//                }).orElseThrow(() -> new NotOwnerException("Usuario sin acceso"));
+//    }
 
 
     public boolean checkCommentOwner(Comment comment, UUID id){

@@ -51,7 +51,6 @@ public class BarService {
             throw new BarNotFoundException("No se encuentra ningún listado de bares.");
 
         return bares;
-
     }
 
     public Bar add(CreateBarDto dto, final User logged) {
@@ -67,7 +66,7 @@ public class BarService {
     public Bar edit(UUID id, EditBarDto dto, final User logged) {
         return repo.findById(id)
                 .map(b -> {
-                    userService.checkOwner(b, logged.getId());
+                    //userService.checkOwner(b, logged.getId());
                     b.setName(dto.getName());
                     b.setDescription(dto.getDescription());
                     b.setDirection(dto.getDirection());
@@ -81,7 +80,7 @@ public class BarService {
         if(repo.existsById(id)){
             repo.findById(id)
                     .map(bar -> {
-                        userService.checkOwner(bar, logged.getId());
+                        //userService.checkOwner(bar, logged.getId());
                         repo.delete(bar);
                         return "";
                     });
