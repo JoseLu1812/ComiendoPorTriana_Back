@@ -6,6 +6,7 @@ import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.CreateBarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.model.dto.EditBarDto;
 import com.salesianos.triana.ComiendoPorTriana.bar.repo.BarRepository;
 import com.salesianos.triana.ComiendoPorTriana.exception.BarNotFoundException;
+import com.salesianos.triana.ComiendoPorTriana.files.service.StorageService;
 import com.salesianos.triana.ComiendoPorTriana.search.spec.GenericSpecificationBuilder;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteria;
 import com.salesianos.triana.ComiendoPorTriana.search.util.SearchCriteriaExtractor;
@@ -16,7 +17,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +32,8 @@ public class BarService {
     private final BarRepository repo;
 
     private final UserService userService;
+
+    private final StorageService storageService;
 
     public BarDto findById(UUID id) {
         Optional<Bar> opt = repo.findById(id);
@@ -52,25 +57,33 @@ public class BarService {
 
         return bares;
     }
+    @Transactional
+    public Bar add(CreateBarDto dto, final User logged, MultipartFile file) {
+        String filename = storageService.store(file);
+        List<String> images = new ArrayList<>();
+        images.add(filename);
 
-    public Bar add(CreateBarDto dto, final User logged) {
         return repo.save(Bar.builder()
                         .name(dto.getName())
                         .description(dto.getDescription())
                         .direction(dto.getDirection())
                         .owner(logged)
-                        .images(dto.getImages())
+                        .images(images)
                         .build());
     }
 
-    public Bar edit(UUID id, EditBarDto dto, final User logged) {
+    public Bar edit(UUID id, EditBarDto dto, final User logged, MultipartFile file) {
+        String filename = storageService.store(file);
+        List<String> images = new ArrayList<>();
+        images.add(filename);
+
         return repo.findById(id)
                 .map(b -> {
                     //userService.checkOwner(b, logged.getId());
                     b.setName(dto.getName());
                     b.setDescription(dto.getDescription());
                     b.setDirection(dto.getDirection());
-                    b.setImages(dto.getImages());
+                    b.setImages(images);
                     return repo.save(b);
                 })
                 .orElseThrow(() -> new BarNotFoundException("El Bar no existe"));

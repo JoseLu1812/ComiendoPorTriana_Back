@@ -1,7 +1,6 @@
 package com.salesianos.triana.ComiendoPorTriana;
 
-import com.salesianos.triana.ComiendoPorTriana.storage.StorageProperties;
-import com.salesianos.triana.ComiendoPorTriana.storage.StorageService;
+import com.salesianos.triana.ComiendoPorTriana.files.service.StorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +8,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@EnableConfigurationProperties(StorageProperties.class)
 public class ComiendoPorTrianaApplication {
 
 	public static void main(String[] args) {

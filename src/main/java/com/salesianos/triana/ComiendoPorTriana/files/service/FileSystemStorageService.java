@@ -1,7 +1,7 @@
-package com.salesianos.triana.ComiendoPorTriana.storage;
+package com.salesianos.triana.ComiendoPorTriana.files.service;
 
-import com.salesianos.triana.ComiendoPorTriana.exception.StorageException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.salesianos.triana.ComiendoPorTriana.files.exception.StorageException;
+import com.salesianos.triana.ComiendoPorTriana.files.utils.MediaTypeUrlResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -17,87 +17,113 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 @Service
-public class FileSystemService implements StorageService {
+public class FileSystemStorageService implements StorageService{
+
+    @Value("${storage.location}")
+    private String storageLocation;
 
     private Path rootLocation;
 
-    @Override
+
     @PostConstruct
+    @Override
     public void init() {
+        rootLocation = Paths.get(storageLocation);
         try {
             Files.createDirectories(rootLocation);
+        } catch (IOException e) {
+            throw new StorageException("Could not initialize storage location", e);
         }
-        catch (IOException e) {
-            throw new StorageException("Could not initialize storage", e);
-        }
-    }
-    @Autowired
-    public FileSystemService(StorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation());
+
     }
 
     @Override
-    public String store(MultipartFile file) {
+    public String store(MultipartFile file)  {
         try {
             return store(file.getBytes(), file.getOriginalFilename(), file.getContentType());
         } catch (Exception ex) {
-            throw new StorageException("Error guardando archivo: " + file.getOriginalFilename(), ex);
+            throw new StorageException("Error storing file: " + file.getOriginalFilename(), ex);
         }
     }
 
     @Override
-    public String store(byte[] file, String filename, String contentType) {
+    public String store(byte[] file, String filename, String contentType) throws Exception {
+
+        // Limpiamos el nombre del fichero
         String newFilename = StringUtils.cleanPath(filename);
+
         if (file.length == 0)
-            throw new StorageException("El archivo está vacío");
+            throw new Exception("The file is empty");
+
         newFilename = calculateNewFilename(newFilename);
+
         try (InputStream inputStream = new ByteArrayInputStream(file)) {
-            Files.copy(inputStream, rootLocation.resolve(newFilename));
+            Files.copy(inputStream, rootLocation.resolve(newFilename),
+                    StandardCopyOption.REPLACE_EXISTING
+            );
         } catch(IOException ex) {
-            throw new StorageException("Error al guardar el archivo: " + newFilename, ex);
+            throw new StorageException("Error storing file: " + newFilename, ex);
         }
+
         return newFilename;
     }
 
     private String calculateNewFilename(String filename) {
         String newFilename = filename;
+
         while(Files.exists(rootLocation.resolve(newFilename))) {
+            // Tratamos de generar un nuevo
             String extension = StringUtils.getFilenameExtension(newFilename);
             String name = newFilename.replace("." + extension, "");
-            newFilename = name + "_" + System.currentTimeMillis() + "." + extension;
+
+            String suffix = Long.toString(System.currentTimeMillis());
+            suffix = suffix.substring(suffix.length()-6);
+
+            newFilename = name + "_" + suffix + "." + extension;
+
         }
         return newFilename;
     }
 
+
+
     @Override
     public Stream<Path> loadAll() {
+
         try {
-            return Files.walk(rootLocation)
+            return Files.walk(rootLocation, 1)
                     .filter(path -> !path.equals(rootLocation))
                     .map(rootLocation::relativize);
         } catch (IOException e) {
-            throw new StorageException("Error leyendo los archivos", e);
+            throw new StorageException("Error reading all files", e);
         }
+
     }
 
     @Override
-    public Path load(String filename) {return rootLocation.resolve(filename);}
+    public Path load(String filename) {
+        return rootLocation.resolve(filename);
+    }
 
     @Override
     public Resource loadAsResource(String filename) {
         try {
             Path file = load(filename);
-            MediaUrlResource resource = new MediaUrlResource(file.toUri());
+            MediaTypeUrlResource resource =
+                    new MediaTypeUrlResource(file.toUri());
+
             if (resource.exists() && resource.isReadable()) {
                 return resource;
             } else {
-                throw new StorageException("No se puede leer el archivo: " + filename);
+                throw new StorageException("Could not read file: " + filename);
             }
+
         } catch (MalformedURLException ex) {
-            throw new StorageException("No se puede leer el archivo: " + filename);
+            throw new StorageException("Could not read file: " + filename);
         }
     }
 
@@ -106,7 +132,7 @@ public class FileSystemService implements StorageService {
         try {
             Files.delete(load(filename));
         } catch (IOException e) {
-            throw new StorageException("No se pudo borrar el archivo:" + filename);
+            throw new StorageException("Could not delete file:" + filename);
         }
     }
 
@@ -115,7 +141,7 @@ public class FileSystemService implements StorageService {
         try {
             FileSystemUtils.deleteRecursively(rootLocation);
         } catch (IOException e) {
-            throw new StorageException("No se pudo borrar los archivos");
+            throw new StorageException("Could not delete all");
         }
     }
 }

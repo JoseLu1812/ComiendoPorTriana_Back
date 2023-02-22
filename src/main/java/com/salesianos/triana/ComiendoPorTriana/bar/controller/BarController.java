@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -41,8 +42,8 @@ public class BarController {
     }
 
     @PostMapping("/bar/")
-    public ResponseEntity<BarDto> createNewBar(@AuthenticationPrincipal User logged, @Valid @RequestBody CreateBarDto dto) {
-        Bar bar = service.add(dto, logged);
+    public ResponseEntity<BarDto> createNewBar(@AuthenticationPrincipal User logged, @Valid @RequestBody CreateBarDto dto, @RequestPart("file") MultipartFile file) {
+        Bar bar = service.add(dto, logged, file);
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -55,8 +56,8 @@ public class BarController {
 
 
     @PutMapping("/bar/{id}")
-    public BarDto edit(@AuthenticationPrincipal User logged, @PathVariable UUID id, @RequestBody EditBarDto dto) {
-        return BarDto.of(service.edit(id,dto, logged));
+    public BarDto edit(@AuthenticationPrincipal User logged, @PathVariable UUID id, @RequestBody EditBarDto dto, @RequestPart("file") MultipartFile file) {
+        return BarDto.of(service.edit(id,dto, logged, file));
     }
 
 
