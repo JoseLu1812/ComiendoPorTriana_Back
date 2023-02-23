@@ -42,7 +42,7 @@ public class BarController {
     }
 
     @PostMapping("/bar/")
-    public ResponseEntity<BarDto> createNewBar(@AuthenticationPrincipal User logged, @Valid @RequestBody CreateBarDto dto, @RequestPart("file") MultipartFile file) {
+    public ResponseEntity<BarDto> createNewBar(@AuthenticationPrincipal User logged, @Valid @RequestPart("dto") CreateBarDto dto, @RequestPart("file") MultipartFile file) {
         Bar bar = service.add(dto, logged, file);
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -56,7 +56,7 @@ public class BarController {
 
 
     @PutMapping("/bar/{id}")
-    public BarDto edit(@AuthenticationPrincipal User logged, @PathVariable UUID id, @RequestBody EditBarDto dto, @RequestPart("file") MultipartFile file) {
+    public BarDto edit(@AuthenticationPrincipal User logged, @PathVariable UUID id, @RequestPart("dto") EditBarDto dto, @RequestPart("file") MultipartFile file) {
         return BarDto.of(service.edit(id,dto, logged, file));
     }
 
