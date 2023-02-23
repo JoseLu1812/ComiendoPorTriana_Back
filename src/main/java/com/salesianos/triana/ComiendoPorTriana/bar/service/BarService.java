@@ -63,13 +63,15 @@ public class BarService {
         List<String> images = new ArrayList<>();
         images.add(filename);
 
-        return repo.save(Bar.builder()
-                        .name(dto.getName())
-                        .description(dto.getDescription())
-                        .direction(dto.getDirection())
-                        .owner(logged)
-                        .images(images)
-                        .build());
+        Bar result = Bar.builder()
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .direction(dto.getDirection())
+                .owner(logged)
+                .images(images)
+                .build();
+
+        return repo.save(result);
     }
 
     public Bar edit(UUID id, EditBarDto dto, final User logged, MultipartFile file) {
