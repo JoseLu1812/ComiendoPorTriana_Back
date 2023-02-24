@@ -37,7 +37,7 @@ public class BarController {
 
     @GetMapping("/bar/")
     public Page<Bar> search(@RequestParam(value = "search", defaultValue = "") String search,
-                            @PageableDefault(size = 12, page = 0) Pageable pageable){
+                            @PageableDefault(size = 6, page = 0) Pageable pageable){
         return service.findAll(search, pageable);
     }
 

@@ -86,26 +86,16 @@ public class UserService {
     }
 
 
-//    public boolean checkOwner(Bar bar, UUID id){
+
+//    public boolean checkCommentOwner(Comment comment, UUID id){
 //        return userRepository.findFirstById(id)
 //                .map(user -> {
-//                    boolean isAdmin = user.getOwnership().stream().anyMatch(b -> b.equals(bar));
-//                    if (!isAdmin)
-//                        throw new NotOwnerException("El usuario no es administrador");
-//                    return isAdmin;
-//                }).orElseThrow(() -> new NotOwnerException("Usuario sin acceso"));
+//                   boolean isAuthor = user.getComments().stream().anyMatch(c -> c.equals(comment));
+//                   if (!isAuthor)
+//                       throw new NotOwnerException("El usuario no es el autor.");
+//                   return isAuthor;
+//                }).orElseThrow(() -> new NotOwnerException("usuario sin acceso."));
 //    }
-
-
-    public boolean checkCommentOwner(Comment comment, UUID id){
-        return userRepository.findFirstById(id)
-                .map(user -> {
-                   boolean isAuthor = user.getComments().stream().anyMatch(c -> c.equals(comment));
-                   if (!isAuthor)
-                       throw new NotOwnerException("El usuario no es el autor.");
-                   return isAuthor;
-                }).orElseThrow(() -> new NotOwnerException("usuario sin acceso."));
-    }
 
 
 }

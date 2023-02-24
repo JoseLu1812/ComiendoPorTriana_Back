@@ -19,7 +19,7 @@ public class EditBarDto {
 
     private String direction;
 
-    private List<String> images;
+    private String image;
 
 
     public static EditBarDto of(Bar b) {
@@ -27,7 +27,7 @@ public class EditBarDto {
                 .name(b.getName())
                 .description(b.getDescription())
                 .direction(b.getDirection())
-                .images(b.getImages())
+                .image(b.getImage())
                 .build();
     }
 
@@ -36,7 +36,7 @@ public class EditBarDto {
                 .name(dto.name)
                 .description(dto.getDescription())
                 .direction(dto.getDirection())
-                .images(dto.getImages())
+                .image(dto.getImage())
                 .build();
     }
 

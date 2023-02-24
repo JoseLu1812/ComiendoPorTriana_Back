@@ -25,7 +25,7 @@ public class BarDto {
 
     private List<Comment> comments;
 
-    private List<String> images;
+    private String image;
 
     public static BarDto of(Bar b) {
         return BarDto.builder()
@@ -34,7 +34,7 @@ public class BarDto {
                 .owner(b.getOwner())
                 .direction(b.getDirection())
                 .comments(b.getComments())
-                .images(b.getImages())
+                .image(b.getImage())
                 .build();
     }
 

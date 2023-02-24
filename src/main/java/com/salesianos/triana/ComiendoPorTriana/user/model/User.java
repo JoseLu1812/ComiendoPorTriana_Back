@@ -58,13 +58,9 @@ public class User implements UserDetails {
     )
     private List<Bar> favList = new ArrayList<Bar>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "author")
-    private List<Comment> comments = new ArrayList<Comment>();
-//
-//    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
 //    @Builder.Default
-//    private List<Bar> ownership = new ArrayList<Bar>();
+//    @OneToMany(mappedBy = "author")
+//    private List<Comment> comments = new ArrayList<Comment>();
 
     @Builder.Default
     private boolean accountNonExpired = true;

@@ -60,15 +60,14 @@ public class BarService {
     @Transactional
     public Bar add(CreateBarDto dto, final User logged, MultipartFile file) {
         String filename = storageService.store(file);
-        List<String> images = new ArrayList<>();
-        images.add(filename);
+        String image = filename;
 
         Bar result = Bar.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .direction(dto.getDirection())
                 .owner(logged)
-                .images(images)
+                .image(image)
                 .build();
 
         return repo.save(result);
@@ -76,8 +75,8 @@ public class BarService {
 
     public Bar edit(UUID id, EditBarDto dto, final User logged, MultipartFile file) {
         String filename = storageService.store(file);
-        List<String> images = new ArrayList<>();
-        images.add(filename);
+        String image = filename;
+
 
         return repo.findById(id)
                 .map(b -> {
@@ -85,7 +84,7 @@ public class BarService {
                     b.setName(dto.getName());
                     b.setDescription(dto.getDescription());
                     b.setDirection(dto.getDirection());
-                    b.setImages(images);
+                    b.setImage(image);
                     return repo.save(b);
                 })
                 .orElseThrow(() -> new BarNotFoundException("El Bar no existe"));
@@ -95,7 +94,6 @@ public class BarService {
         if(repo.existsById(id)){
             repo.findById(id)
                     .map(bar -> {
-                        //userService.checkOwner(bar, logged.getId());
                         repo.delete(bar);
                         return "";
                     });

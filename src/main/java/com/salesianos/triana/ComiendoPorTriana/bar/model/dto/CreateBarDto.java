@@ -23,7 +23,7 @@ public class CreateBarDto {
 
     private String direction;
 
-    private List<String> images;
+    private String image;
 
 
 

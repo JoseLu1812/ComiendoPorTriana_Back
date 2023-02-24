@@ -1,6 +1,5 @@
 package com.salesianos.triana.ComiendoPorTriana.bar.model;
 
-import com.salesianos.triana.ComiendoPorTriana.bar.model.converter.StringListConverter;
 import com.salesianos.triana.ComiendoPorTriana.comment.model.Comment;
 import com.salesianos.triana.ComiendoPorTriana.user.model.User;
 import lombok.*;
@@ -35,9 +34,7 @@ public class Bar {
 
     private String direction;
 
-    @Builder.Default
-    @Convert(converter = StringListConverter.class)
-    private List<String> images = new ArrayList<String>();
+    private String image;
 
     @Builder.Default
     @OneToMany(mappedBy = "bar")
@@ -53,12 +50,5 @@ public class Bar {
         this.getComments().remove(c);
     }
 
-    public void addToImages(String image){
-        this.getImages().add(image);
-    }
-
-    public void deleteFromImages(String image){
-        this.getImages().remove(image);
-    }
 
 }
