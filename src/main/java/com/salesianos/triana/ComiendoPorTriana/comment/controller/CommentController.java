@@ -40,10 +40,6 @@ public class CommentController {
     private final BarService barService;
 
 
-
-
-
-
     @Operation(
             summary = "Obtener un Comentarios",
             description = "Esta petición devuelve un ComentarioDto"
@@ -66,7 +62,7 @@ public class CommentController {
                     description = "No se encontró el Comentario en el Bar indicado",
                     content = {@Content()}
             )
-    })@GetMapping("/bar/{barId}/comment/{comId}")
+    })@GetMapping("/comment/{comId}")
     public CommentDto findBarComment(@Parameter(name = "BarId", description = "Id del Bar")@PathVariable UUID barId,
                                      @Parameter(name = "ComId", description = "Id del Comentario")@PathVariable UUID comId){
         BarDto bar = barService.findById(barId);
@@ -116,7 +112,7 @@ public class CommentController {
                     content = {@Content()}
             )
     })
-    @GetMapping("/bar/{barId}/comment/")
+    @GetMapping("/comment")
     public Page<Comment> searchBarComments(@Parameter(name = "Search", description = "Filtros de busqueda para la petición")@RequestParam(value = "search", defaultValue = "") String search,
                                            @PageableDefault(size = 12, page = 0) Pageable pageable,
                                            @Parameter(name = "BarId", description = "Id del Bar")@PathVariable UUID barId){
@@ -149,7 +145,7 @@ public class CommentController {
                     content = {@Content()}
             )
     })
-    @PostMapping("bar/{barId}/comment/")
+    @PostMapping("/comment/")
     public ResponseEntity<CommentDto> createNewComment(@Parameter(name = "Dto", description = "Cuerpo aportado para crear el Comentario")@Valid @RequestBody CreateCommentDto dto,
                                                        @Parameter(name = "BarId", description = "Id del Bar")@PathVariable UUID barId){
         Comment comment = service.add(dto, barId);
@@ -190,7 +186,7 @@ public class CommentController {
                     content = {@Content()}
             )
     })
-    @PutMapping("bar/{barId}/comment/{comId}")
+    @PutMapping("/comment/{comId}")
     public CommentDto edit(@Parameter(name = "Logged", description = "Sesión de usuario autenticado")@AuthenticationPrincipal User logged,
                            @Parameter(name = "ComId", description = "Id del Comentario")@PathVariable UUID comId,
                            @Parameter(name = "BarId", description = "Id del Bar")@PathVariable UUID barId,
@@ -222,7 +218,7 @@ public class CommentController {
                     content = {@Content()}
             )
     })
-    @DeleteMapping("bar/{barId}/comment/{comId}")
+    @DeleteMapping("/comment/{comId}")
     public ResponseEntity<?> delete(@Parameter(name = "Logged", description = "Sesión de usuario autenticado")@AuthenticationPrincipal User logged,
                                     @Parameter(name = "ComId", description = "Id del Comentario")@PathVariable UUID comId,
                                     @Parameter(name = "BarId", description = "Id del Bar")@PathVariable UUID barId){

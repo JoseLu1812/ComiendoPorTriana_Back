@@ -27,7 +27,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -149,7 +148,7 @@ public class BarController {
                     content = {@Content()}
             )
     })
-    @GetMapping("/bar/")
+    @GetMapping("/bar")
     public Page<Bar> search(@Parameter(name = "Search", description = "Filtros de busqueda para la petición")@RequestParam(value = "search", defaultValue = "") String search,
                             @PageableDefault(size = 6, page = 0) Pageable pageable){
         return service.findAll(search, pageable);
