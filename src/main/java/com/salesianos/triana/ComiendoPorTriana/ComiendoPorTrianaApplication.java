@@ -17,7 +17,7 @@ public class ComiendoPorTrianaApplication {
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
 		return (args) -> {
-			storageService.deleteAll();
+			//storageService.deleteAll();
 			storageService.init();
 		};
 	}
